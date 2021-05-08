@@ -172,6 +172,9 @@ section {
     background: #66dec3;
 }
 /* common interaction design */
+.main-message {
+    opacity: 0;
+}
 .sticky-elem {
     display: none;
     position: fixed;
