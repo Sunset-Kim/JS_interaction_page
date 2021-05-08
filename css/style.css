@@ -1,0 +1,207 @@
+@charset 'utf-8';
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+/* reset */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+html {
+    font-size: 62.5%;
+}
+body {
+    font-size: 1.4rem;
+    overflow-x: hidden;
+    color: rgb(29, 29, 31);
+    letter-spacing: -0.05em;
+    background-color: white;
+}
+ul,
+li {
+    list-style: none;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+p {
+    line-height: 1.6;
+}
+/* layout */
+.wrap {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    height: inherit;
+}
+/* gnb */
+.global-nav {
+    height: 4.5rem;
+    overflow: hidden;
+}
+.local-nav-list,
+.global-nav-list {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+.global-nav-list {
+    justify-content: space-between;
+}
+.global-nav-item a {
+    padding: 2rem 0;
+    transition: 0.3s ease-in-out;
+}
+.global-nav-item a:hover {
+    color: gold;
+}
+
+/* local */
+.local-nav {
+    height: 60px;
+    border-bottom: 1px solid #ddd;
+}
+.local-nav-item:not(.logo) a {
+    margin-left: 2rem;
+}
+.logo {
+    margin-right: auto;
+}
+.logo h1 {
+    font-size: 2.8rem;
+    font-weight: 900;
+}
+/* common section */
+.scroll-section {
+    padding-top: 50vh;
+}
+
+/* section0 */
+#scroll-section-0 h1 {
+    text-align: center;
+    font-size: 4rem;
+    font-weight: 800;
+}
+.main-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    height: 3em;
+
+    text-align: center;
+    font-size: 2.5rem;
+}
+.main-message p {
+    font-weight: 600;
+    line-height: 1.2;
+}
+/* section1 */
+.desc {
+    font-size: 1.4rem;
+    color: #666;
+}
+.desc strong {
+    font-size: 3rem;
+    font-weight: 600;
+    color: rgb(29, 29, 31);
+    float: left;
+    margin-right: 0.5em;
+}
+
+/* section2 */
+.main-message small {
+    display: block;
+    font-size: 1.4rem;
+    margin-bottom: 0.5em;
+}
+#scroll-section-2 .main-message {
+    font-size: 3rem;
+    font-weight: 700;
+}
+.desc-message {
+    font-weight: 500;
+    font-size: 1.6rem;
+    width: 50%;
+}
+.pin {
+    width: 1px;
+    height: 50px;
+    background: #000;
+}
+
+/* section3 */
+.mid-message {
+    padding: 0 1rem;
+    font-size: 2.2rem;
+    color: #666;
+}
+
+.mid-message strong {
+    display: block;
+    color: initial;
+}
+
+.canvas-caption {
+    padding: 0 1rem;
+    color: #666;
+    font-size: 1.4rem;
+}
+
+/* footer */
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 7rem;
+    background: #66dec3;
+}
+
+/* 반응형 디자인 */
+@media screen and (max-width: 768px) {
+    .logo h1 {
+        font-size: 1.6rem;
+        font-weight: 900;
+    }
+    .local-nav-item:not(.logo) a {
+        margin-left: 1rem;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    #scroll-section-0 h1 {
+        font-size: 9vw;
+    }
+    .main-message {
+        font-size: 4vw;
+    }
+    .desc {
+        font-size: 2rem;
+    }
+    .desc strong {
+        font-size: 6rem;
+    }
+    .main-message small {
+        font-size: 2vw;
+    }
+    #scroll-section-2 .main-message {
+        font-size: 6vw;
+    }
+    .desc-message {
+        width: 15%;
+    }
+    .mid-message,
+    .canvas-caption {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    .mid-message {
+        font-size: 4vw;
+    }
+    .canvas-caption {
+        font-size: 2rem;
+    }
+}
