@@ -172,16 +172,17 @@ section {
     background: #66dec3;
 }
 /* common interaction design */
-.main-message {
-    opacity: 0;
-}
 .sticky-elem {
     display: none;
     position: fixed;
-    top: 0;
     left: 0;
     width: 100%;
 }
+.main-message {
+    top: 35vh;
+    opacity: 0;
+}
+
 /* body에 스크롤 확인용 id */
 #show-scene-0 #scroll-section-0 .sticky-elem,
 #show-scene-1 #scroll-section-1 .sticky-elem,

@@ -26,7 +26,7 @@
             values: {
                 // key: 해당돔_속성 value: array[시작값,끝값,범위:object]
                 // 예) header_opacity: [0, 1, {start: 0.2, end: 0.4}];
-                messageA_opacity: [0,1,{start: 0.1, end: 0.2}],
+                messageA_opacity: [0,1,{start: 0.5, end: 0.8}],
                 messageB_opacity: [0,1,{start: 0.3, end: 0.4}],
                 messageC_opacity: [0,1,{start: 0.3, end: 0.4}],
                 messageD_opacity: [0,1,{start: 0.3, end: 0.4}],
@@ -112,15 +112,35 @@
     function calcValues(values, currentYOffset) {
         // 현재 섹션에서 스크롤 비율을 계산하고 css 값을 반환하는 함수
         let rv;
-        let scrollRatio = currentYOffset / sceneInfo[currentScene].scrollHeight;
+        const scrollHeight = sceneInfo[currentScene].scrollHeight;
+        const scrollRatio = currentYOffset / scrollHeight;
+        
+        // tdd
+        console.log(scrollRatio);
+        // 값의 범위 구하기 => 초기값 + 값의 범위 * 현재 스크롤 값
+        let valuesLength = values[1] - values[0];  
+        
+        if(values.length === 3) {
 
-        // 구간 정하기
-        let valuesLength = values[1] - values[0];
-    
-        rv = valuesLength * scrollRatio + values[0]; 
-        console.log(rv);
+            // 구간사이에 애니메이션 구하기
+            const partScrollStart = values[2].start * scrollHeight;
+            const partScrollEnd = values[2].end * scrollHeight;
+            const partScrollHeight = partScrollEnd - partScrollStart;
+            const partScrollRatio = (currentYOffset - partScrollStart) / partScrollHeight;
+                if(currentYOffset < partScrollStart) {
+                    rv = values[0]
+                } else if(currentYOffset > partScrollEnd) {
+                    rv = values[1]
+                } else if(currentYOffset >= partScrollStart && currentYOffset <= partScrollEnd) {
+                    rv = partScrollRatio * valuesLength + values[0];
+                }
 
-        return rv;
+            } else {
+                rv = scrollRatio * valuesLength  + values[0];
+            }
+            return rv;
+        
+        
     }
 
     function playAnimation() {
