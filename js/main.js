@@ -24,8 +24,8 @@
                 
             },
             values: {
-                // key: 해당돔_속성 value: array[시작값,끝값,범위시작,범위끝]
-                // 예) header_opacity: [0, 1, .2, .4];
+                // key: 해당돔_속성 value: array[시작값,끝값,범위:object]
+                // 예) header_opacity: [0, 1, {start: 0.2, end: 0.4}];
                 messageA_opacity: [0,1,{start: 0.1, end: 0.2}],
                 messageB_opacity: [0,1,{start: 0.3, end: 0.4}],
                 messageC_opacity: [0,1,{start: 0.3, end: 0.4}],
