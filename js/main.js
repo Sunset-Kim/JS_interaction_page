@@ -26,10 +26,28 @@
             values: {
                 // key: 해당돔_속성 value: array[시작값,끝값,범위:object]
                 // 예) header_opacity: [0, 1, {start: 0.2, end: 0.4}];
-                messageA_opacity: [0,1,{start: 0.5, end: 0.8}],
-                messageB_opacity: [0,1,{start: 0.3, end: 0.4}],
-                messageC_opacity: [0,1,{start: 0.3, end: 0.4}],
-                messageD_opacity: [0,1,{start: 0.3, end: 0.4}],
+                messageA_opacity_in: [0, 1, {start: 0.1, end: 0.2}],
+                messageA_opacity_out: [1, 0, {start: 0.25, end: 0.3}],
+                messageA_translateY_in: [20, 0, {start: 0.1, end: 0.2}],
+                messageA_translateY_out: [0, -20, {start: 0.25, end: 0.3}],
+
+                messageB_opacity_in: [0, 1, {start: 0.1, end: 0.2}],
+                messageB_opacity_out: [1, 0, {start: 0.25, end: 0.3}],
+                messageB_translateY_in: [20, 0, {start: 0.1, end: 0.2}],
+                messageB_translateY_out: [0, -20, {start: 0.25, end: 0.3}],
+
+                messageC_opacity_in: [0, 1, {start: 0.1, end: 0.2}],
+                messageC_opacity_out: [1, 0, {start: 0.25, end: 0.3}],
+                messageC_translateY_in: [20, 0, {start: 0.1, end: 0.2}],
+                messageC_translateY_out: [0, -20, {start: 0.25, end: 0.3}],
+
+                messageD_opacity_in: [0, 1, {start: 0.1, end: 0.2}],
+                messageD_opacity_out: [1, 0, {start: 0.25, end: 0.3}],
+                messageD_translateY_in: [20, 0, {start: 0.1, end: 0.2}],
+                messageD_translateY_out: [0, -20, {start: 0.25, end: 0.3}],
+
+                
+               
             }
         },
         {
@@ -115,8 +133,6 @@
         const scrollHeight = sceneInfo[currentScene].scrollHeight;
         const scrollRatio = currentYOffset / scrollHeight;
         
-        // tdd
-        console.log(scrollRatio);
         // 값의 범위 구하기 => 초기값 + 값의 범위 * 현재 스크롤 값
         let valuesLength = values[1] - values[0];  
         
@@ -150,11 +166,25 @@
         const objs = sceneInfo[currentScene].objs;
         const values = sceneInfo[currentScene].values;
         const currentYOffset = yOffset - prevScrollHeight;
-
+        const scrollRatio = currentYOffset / sceneInfo[currentScene].scrollHeight;
         switch (currentScene) {
             case 0:
-                let messageA_opacity_in = calcValues(values.messageA_opacity, currentYOffset);
-                objs.messageA.style.opacity = messageA_opacity_in;
+                console.log(scrollRatio);        
+                let messageA_opacity_in = calcValues(values.messageA_opacity_in, currentYOffset);
+                let messageA_opacity_out = calcValues(values.messageA_opacity_out, currentYOffset);
+                let messageA_translateY_in = calcValues(values.messageA_translateY_in, currentYOffset);
+                let messageA_translateY_out = calcValues(values.messageA_translateY_out, currentYOffset);
+
+                
+                if(scrollRatio <= 0.22) {
+                    objs.messageA.style.opacity = messageA_opacity_in;
+                    objs.messageA.style.transform = `translateY(${messageA_translateY_in}%)`;
+                } else {
+                    objs.messageA.style.opacity = messageA_opacity_out;
+                    objs.messageA.style.transform = `translateY(${messageA_translateY_out}%)`;
+                }
+               
+                
                 break;
             case 1:
                 
