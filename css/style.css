@@ -138,6 +138,15 @@ section {
     font-weight: 500;
     font-size: 1.6rem;
     width: 50%;
+    opacity: 0;
+}
+.desc-message.b {
+    top: 20%;
+    left: 30%;
+}
+.desc-message.c {
+    top: 70%;
+    left: 60%;
 }
 .pin {
     width: 1px;
@@ -182,7 +191,9 @@ section {
     top: 35vh;
     opacity: 0;
 }
+.desc-message {
 
+}
 /* body에 스크롤 확인용 id */
 #show-scene-0 #scroll-section-0 .sticky-elem,
 #show-scene-1 #scroll-section-1 .sticky-elem,
