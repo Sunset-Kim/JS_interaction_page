@@ -62,8 +62,17 @@
         prevScrollHeight = 0;
         for(let i = 0; i < currentScene; i++) {
             prevScrollHeight += sceneInfo[i].scrollHeight; 
-            console.log(prevScrollHeight);
         }
+        // console.log(prevScrollHeight);
+
+        if(yOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
+            currentScene ++;
+        } else if (yOffset < prevScrollHeight) {
+            if(currentScene === 0) return;
+            currentScene --;
+        }
+
+        console.log(currentScene);
     }
 
     // 이벤트

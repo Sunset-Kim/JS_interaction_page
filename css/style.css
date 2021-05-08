@@ -30,6 +30,10 @@ a {
 p {
     line-height: 1.6;
 }
+/* tdd */
+section {
+    border: 1px solid red;
+}
 /* layout */
 .wrap {
     max-width: 1000px;
@@ -39,6 +43,10 @@ p {
 }
 /* gnb */
 .global-nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
     height: 4.5rem;
     overflow: hidden;
 }
@@ -61,7 +69,11 @@ p {
 
 /* local */
 .local-nav {
-    height: 60px;
+    position: absolute;
+    top: 4.5rem;
+    left: 0;
+    width: 100%;
+    height: 6rem;
     border-bottom: 1px solid #ddd;
 }
 .local-nav-item:not(.logo) a {
