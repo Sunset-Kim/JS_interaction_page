@@ -22,6 +22,9 @@
                 messageC: document.querySelector('#scroll-section-0 .main-message.c'),
                 messageD: document.querySelector('#scroll-section-0 .main-message.d'),
                 
+                canvas: document.querySelector('#video-canvas-0'),
+                context: document.querySelector('#video-canvas-0').getContext('2d'),
+                videoImages: [],
             },
             values: {
                 // key: 해당돔_속성 value: array[시작값,끝값,범위:object]
@@ -46,8 +49,11 @@
                 messageD_translateY_in: [20, 0, {start: 0.7, end: 0.8}],
                 messageD_translateY_out: [0, -20, {start: 0.85, end: 0.9}],
 
-                
-               
+                // 비디오
+                videoImageCount: 740,
+                imageSequence: [0,739],
+                canvas_opacitiy_in: [0,1,{start:0, end: 0.1}],
+                canvas_opacitiy_out: [1,0,{start: 0.9, end: 1}],
             }
         },
         {
@@ -72,10 +78,12 @@
                 messageC: document.querySelector('#scroll-section-2 .c'),
                 pinB: document.querySelector('#scroll-section-2 .b .pin'),
                 pinC: document.querySelector('#scroll-section-2 .c .pin'),
-
+                
             },
             values: {
+              
 
+                // 텍스트
                 messageA_translateY_in: [20, 0, { start: 0.15, end: 0.2 }],
                 messageB_translateY_in: [30, 0, { start: 0.6, end: 0.65 }],
                 messageC_translateY_in: [30, 0, { start: 0.87, end: 0.92 }],
@@ -102,9 +110,18 @@
             },
         },
     ]
+    function setCanvasImages(){
+        let imgElem;
+        for(let i = 0; i < sceneInfo[0].values.videoImageCount; i++) {
+            imgElem = new Image();
+            imgElem.src = `./img/canvas_0/main${i + 1}.jpg`;
+            sceneInfo[0].objs.videoImages.push(imgElem);
+        }
+    }
+    setCanvasImages();
 
-    function setLayout() {
-        
+
+    function setLayout() {   
         // 스크롤 높이값 세팅 함수
         for (let i = 0; i < sceneInfo.length; i++) {
             if(sceneInfo[i].type === 'sticky'){
@@ -126,7 +143,9 @@
             }
         }
         document.body.setAttribute('id',`show-scene-${currentScene}`);
-
+        // 캔버스 사이즈 조절
+        const heightRatio = window.innerHeight / 1080;
+        sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%,-50%,0) scale(${heightRatio})`;
     }
 
     function scrollLoop() {
@@ -196,6 +215,16 @@
         const scrollRatio = currentYOffset / sceneInfo[currentScene].scrollHeight;
         switch (currentScene) {
             case 0:
+                // 캔버스 애니메이션
+                let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
+                sequence = (isNaN(sequence)) ? 0 : sequence;
+                objs.context.drawImage(objs.videoImages[sequence],0,0);
+                if(scrollRatio <= 0.5) {
+                    objs.canvas.style.opacity = calcValues(values.canvas_opacitiy_in,currentYOffset);
+                } else {
+                    objs.canvas.style.opacity = calcValues(values.canvas_opacitiy_out,currentYOffset);
+                }
+
                 // 텍스트 애니메이션
                 if(scrollRatio <= 0.22) {
                     objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset);
@@ -240,12 +269,12 @@
                 
                 break;
             case 2:
+                
                 // 텍스트 애니메이션
                 if (scrollRatio <= 0.32) {
                     // in
                     objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset);
                     objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_in, currentYOffset)}%, 0)`;
-                    console.log(calcValues(values.messageA_translateY_in, currentYOffset));
                 } else {
                     // out
                     objs.messageA.style.opacity = calcValues(values.messageA_opacity_out, currentYOffset);
@@ -287,6 +316,7 @@
     // load와 돔컨텐트 로드 차이 => html 구조만 다 받으면,
     window.addEventListener('load',()=>{
         setLayout();
+        sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0],0,0);
     })
     window.addEventListener('resize', setLayout)
     window.addEventListener('scroll', () => {
