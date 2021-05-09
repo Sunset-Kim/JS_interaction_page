@@ -645,7 +645,10 @@
 
         // 모바일 가로보기
         window.addEventListener('orientationchange', () => {
-            setTimeout(setLayout, 300);
+            scrollTo(0,0);
+            setTimeout(() => {
+                window.location.reload();
+            }, 500);
         });
 
         // 로딩창 삭제
