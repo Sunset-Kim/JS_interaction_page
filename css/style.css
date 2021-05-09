@@ -54,9 +54,6 @@ body.before-load {
     -moz-backdrop-filter: saturate(180%) blur(15px);
     -o-backdrop-filter: saturate(180%) blur(15px);
 }
-.local-nav-sticky .local-nav .logo {
-    color: dodgerblue;
-}
 
 /* loading */
 .loading {
