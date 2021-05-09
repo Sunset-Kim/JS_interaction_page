@@ -30,6 +30,51 @@ a {
 p {
     line-height: 1.6;
 }
+body.before-load {
+    overflow: hidden;
+}
+/* loading */
+.loading {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255,255,255,.8);
+    transition: opacity 0.5s ease-in-out;
+    opacity: 0;
+    z-index: 9999;
+}
+.before-load .loading {
+    opacity: 1;
+}
+.loading-circle {
+    width: 54px;
+    height: 54px;
+    animation: loading-spin 3s infinite;
+}
+.loading-circle circle {
+    stroke: dodgerblue;
+    stroke-width: 4;
+    fill: none;
+    /* getTotalLength로 가지고옴 */
+    stroke-dasharray: 157;
+    stroke-dashoffset: 0;
+    animation: loading-circle-ani 1s infinite;
+}
+@keyframes loading-circle-ani {
+    0% {stroke-dashoffset: 157;}
+    75% {stroke-dashoffset: -147;}
+    100% {stroke-dashoffset: -157;}
+}
+@keyframes loading-spin {
+    100%{
+        transform: rotate(360deg);
+    }
+}
 /* layout */
 .wrap {
     max-width: 1000px;
@@ -205,7 +250,6 @@ p {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: skyblue;    
 }
 .image-blend-canvas.sticky {
     position: fixed;

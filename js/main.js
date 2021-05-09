@@ -167,7 +167,7 @@
         }
 
     }
-    setCanvasImages();
+    
 
     function checkMenu() {
         if(yOffset > 45) {
@@ -598,24 +598,51 @@
     // 이벤트
     // load와 돔컨텐트 로드 차이 => html 구조만 다 받으면,
     window.addEventListener('load',()=>{
+
+        // 로딩
+        document.body.classList.remove('before-load');
+
+        // 레이아웃 설정
         setLayout();
         sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0],0,0);
+
+        // 스크롤
+        window.addEventListener('scroll', () => {
+            yOffset = pageYOffset;
+            scrollLoop();
+            checkMenu();
+    
+            if(!rafState) {
+                rafId = requestAnimationFrame(loop);
+                rafState = true;
+            }
+        })
+
+        // 리사이즈
+        window.addEventListener('resize', () => {
+            if(window.innerWidth > 600) {
+                setLayout();
+            }
+            sceneInfo[3].values.rectStartY = 0; // 리사이즈를 위한 초기화 함수
+        })
+
+        // 모바일 가로보기
+        window.addEventListener('orientationchange', setLayout);
+
+        // 로딩창 삭제
+        document.querySelector('.loading').addEventListener('transitionend', (e) => {
+            document.body.removeChild(e.currentTarget);
+        })
+
     })
-    window.addEventListener('resize', setLayout)
-    window.addEventListener('scroll', () => {
-        yOffset = pageYOffset;
-        scrollLoop();
-        checkMenu();
+    
+    
+    
 
-        if(!rafState) {
-            rafId = requestAnimationFrame(loop);
-            rafState = true;
-        }
+    
 
-    })
-
-    // tdd 코드
-    scrollLoop();
+    // 실행코드
+    setCanvasImages();
 
 
 })()
