@@ -49,7 +49,7 @@ body.before-load {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(255,255,255,.8);
+    background: rgba(255, 255, 255, 0.8);
     transition: opacity 0.5s ease-in-out;
     opacity: 0;
     z-index: 9999;
@@ -72,12 +72,18 @@ body.before-load {
     animation: loading-circle-ani 1s infinite;
 }
 @keyframes loading-circle-ani {
-    0% {stroke-dashoffset: 157;}
-    75% {stroke-dashoffset: -147;}
-    100% {stroke-dashoffset: -157;}
+    0% {
+        stroke-dashoffset: 157;
+    }
+    75% {
+        stroke-dashoffset: -147;
+    }
+    100% {
+        stroke-dashoffset: -157;
+    }
 }
 @keyframes loading-spin {
-    100%{
+    100% {
         transform: rotate(360deg);
     }
 }
@@ -128,7 +134,7 @@ body.before-load {
 .local-nav-sticky .local-nav {
     position: fixed;
     top: 0;
-    background-color: rgba(255,255,255,0.1);
+    background-color: rgba(255, 255, 255, 0.1);
     backdrop-filter: saturate(180%) blur(15px);
     -webkit-backdrop-filter: saturate(180%) blur(15px);
     -moz-backdrop-filter: saturate(180%) blur(15px);
@@ -141,7 +147,6 @@ body.before-load {
     margin-right: auto;
 }
 .logo h1 {
-    
     font-size: 2.8rem;
     font-weight: 900;
 }
@@ -205,6 +210,8 @@ body.before-load {
     font-size: 1.6rem;
     width: 50%;
     opacity: 0;
+    text-shadow: 0 0 3px rgba(29, 29, 31);
+    font-size: 1.8rem;
 }
 .desc-message.b {
     top: 15%;
@@ -285,7 +292,6 @@ body.before-load {
     opacity: 0;
 }
 .desc-message {
-
 }
 /* body에 스크롤 확인용 id */
 #show-scene-0 #scroll-section-0 .sticky-elem,
@@ -308,8 +314,8 @@ body.before-load {
         margin-left: 1rem;
     }
     .desc {
-         padding: 0 1rem
-     }
+        padding: 0 1rem;
+    }
     .canvas-caption {
         padding: 0 1rem;
         font-size: 1.4rem;
@@ -338,7 +344,6 @@ body.before-load {
     }
     #scroll-section-2 .main-message {
         font-size: 6vw;
-        
     }
     .desc-message {
         width: 15%;
@@ -350,8 +355,12 @@ body.before-load {
     }
     .mid-message {
         font-size: 3.5vw;
+        margin-bottom: 30rem;
     }
     .canvas-caption {
         font-size: 2rem;
+    }
+    .desc-message.b {
+        top: 30%;
     }
 }
