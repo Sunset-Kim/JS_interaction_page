@@ -135,11 +135,7 @@
                 context: document
                     .querySelector('.image-blend-canvas')
                     .getContext('2d'),
-                imagePath: [
-                    './img/blend/blend1.jpg',
-                    './img/blend/blend2.jpg',
-                    './img/blend/blend3.jpg',
-                ],
+                imagePath: ['./img/blend/blend1.jpg', './img/blend/blend2.jpg'],
                 images: [],
             },
             values: {

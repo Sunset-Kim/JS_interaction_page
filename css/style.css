@@ -30,15 +30,34 @@ a {
 p {
     line-height: 1.6;
 }
+.container {
+    overflow-x: hidden;
+}
+
+/* body 추가 클래스 */
+
+/* loading class */
 body.before-load {
     overflow: hidden;
 }
 .before-load .container {
     display: none;
 }
-.container {
-    overflow-x: hidden;
+
+/* nav fixed */
+.local-nav-sticky .local-nav {
+    position: fixed;
+    top: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: saturate(180%) blur(15px);
+    -webkit-backdrop-filter: saturate(180%) blur(15px);
+    -moz-backdrop-filter: saturate(180%) blur(15px);
+    -o-backdrop-filter: saturate(180%) blur(15px);
 }
+.local-nav-sticky .local-nav .logo {
+    color: dodgerblue;
+}
+
 /* loading */
 .loading {
     position: fixed;
@@ -131,20 +150,12 @@ body.before-load {
     border-bottom: 1px solid #ddd;
     z-index: 99;
 }
-.local-nav-sticky .local-nav {
-    position: fixed;
-    top: 0;
-    background-color: rgba(255, 255, 255, 0.1);
-    backdrop-filter: saturate(180%) blur(15px);
-    -webkit-backdrop-filter: saturate(180%) blur(15px);
-    -moz-backdrop-filter: saturate(180%) blur(15px);
-    -o-backdrop-filter: saturate(180%) blur(15px);
-}
 .local-nav-item:not(.logo) a {
     margin-left: 2rem;
 }
 .logo {
     margin-right: auto;
+    transition: color 0.3s ease-in-out;
 }
 .logo h1 {
     font-size: 2.8rem;
@@ -164,6 +175,10 @@ body.before-load {
     font-size: 4rem;
     font-weight: 800;
     top: -22vh;
+}
+#scroll-section-0 .main-message {
+    color: white;
+    text-shadow: 1.5px 1.5px 3px rgba(29, 29, 31, 0.6);
 }
 .main-message {
     display: flex;
@@ -203,6 +218,7 @@ body.before-load {
     color: white;
     font-size: 3rem;
     font-weight: 700;
+    text-shadow: 1.5px 1.5px 3px rgba(29, 29, 31, 0.6);
 }
 .desc-message {
     color: white;
@@ -210,7 +226,7 @@ body.before-load {
     font-size: 1.6rem;
     width: 50%;
     opacity: 0;
-    text-shadow: 0 0 3px rgba(29, 29, 31);
+    text-shadow: 1.5px 1.5px 3px rgba(29, 29, 31, 0.6);
     font-size: 1.8rem;
 }
 .desc-message.b {
@@ -293,6 +309,7 @@ body.before-load {
 }
 .desc-message {
 }
+
 /* body에 스크롤 확인용 id */
 #show-scene-0 #scroll-section-0 .sticky-elem,
 #show-scene-1 #scroll-section-1 .sticky-elem,
@@ -301,9 +318,11 @@ body.before-load {
     display: block;
     will-change: transform, opacity;
 }
+
 .scroll-effect-end .sticky-elem {
     display: none !important;
 }
+
 /* 반응형 디자인 */
 @media screen and (max-width: 768px) {
     .logo h1 {
