@@ -622,12 +622,14 @@
         window.addEventListener('resize', () => {
             if(window.innerWidth > 900) {
                 setLayout();
+                sceneInfo[3].values.rectStartY = 0; // 리사이즈를 위한 초기화 함수
             }
-            sceneInfo[3].values.rectStartY = 0; // 리사이즈를 위한 초기화 함수
         })
 
         // 모바일 가로보기
-        window.addEventListener('orientationchange', setLayout);
+        window.addEventListener('orientationchange', () => {
+            setTimeout(setLayout, 300);
+        });
 
         // 로딩창 삭제
         document.querySelector('.loading').addEventListener('transitionend', (e) => {
