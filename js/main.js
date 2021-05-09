@@ -606,6 +606,23 @@
         setLayout();
         sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0],0,0);
 
+        // 중간지점에서 새로고침할경우
+        let tempYOffset = yOffset;
+        let tempScrollCount = 0;
+        
+        if(yOffset > 0) {
+            let setIn = setInterval(() => {
+                window.scrollTo(0,tempYOffset)
+                tempYOffset += 5;
+                tempScrollCount ++;
+    
+                if (tempScrollCount > 20) {
+                    clearInterval(setIn)
+                }
+            }, 20);
+        }
+        
+
         // 스크롤
         window.addEventListener('scroll', () => {
             yOffset = pageYOffset;
