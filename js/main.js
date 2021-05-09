@@ -486,10 +486,13 @@
                 if(scrollRatio < values.rect1X[2].end) {
                     step = 1;
                     console.log('캔버스닿기전');
+                    objs.canvas.classList.remove('sticky');
                 } else {
                     step = 2;
                     console.log('캔버스 닿은후');
-                    objs.canvas.classList.add('sticky-elem')
+                    objs.canvas.classList.add('sticky');
+                    objs.canvas.style.top = `-${(objs.canvas.height - objs.canvas.height * canvasScaleRatio)/2}px`
+                    
                     // if() {
                     //     step = 3;
                     // }

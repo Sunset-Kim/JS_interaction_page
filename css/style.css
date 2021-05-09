@@ -201,6 +201,10 @@ p {
     align-items: center;
     background: skyblue;    
 }
+.image-blend-canvas.sticky {
+    position: fixed;
+    top: 0;
+}
 .sticky-elem-canvas {
     height: 100%;
     top: 0;
