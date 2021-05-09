@@ -131,6 +131,7 @@
                 rect2X: [0,0, {start: 0, end: 0}],
                 rectStartY: 0,
                 blendHeight: [0,0, {start: 0, end: 0}],
+                canvas_scale: [0,0, {start: 0, end: 0}],
             }
 
         },
@@ -444,7 +445,7 @@
                 const recalculatedInnerWidth = document.body.offsetWidth / canvasScaleRatio;
                 const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio;
 
-                // 구간 구하기
+                // 브라우져와 캔버스의 높이 값으로 브라우져가 상단에 닿는 구간 구하기
                 if(!values.rectStartY) {
                     // values.rectStartY = objs.canvas.getBoundingClientRect().top;
                     // values.rectStartY = objs.canvas.offsetTop; //scale 때문에 제대로 읽어올수 없음.
@@ -486,11 +487,9 @@
 
                 if(scrollRatio < values.rect1X[2].end) {
                     step = 1;
-                    console.log('캔버스닿기전');
                     objs.canvas.classList.remove('sticky');
                 } else {
                     step = 2;
-                    console.log('캔버스 닿은후');
                     // 캔버스 고정
                     objs.canvas.classList.add('sticky');
                     objs.canvas.style.top = `-${(objs.canvas.height - objs.canvas.height * canvasScaleRatio)/2}px`
@@ -518,9 +517,17 @@
                     )
 
                     
-                    // if() {
-                    //     step = 3;
-                    // }
+                    // 스케일 변화시작
+                    if(scrollRatio > values.blendHeight[2].end) {
+                        step = 3;
+                        values.canvas_scale[0] = canvasScaleRatio;
+                        values.canvas_scale[1] = document.body.offsetWidth / (1.5 * objs.canvas.width);
+                        values.canvas_scale[2].start = values.blendHeight[2].end;
+                        values.canvas_scale[2].end = values.canvas_scale[2].start + 0.2;
+
+                        objs.canvas.style.transform = `scale(${calcValues(values.canvas_scale,currentYOffset)})`;
+                    }
+                    
                 }
 
 
