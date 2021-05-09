@@ -87,20 +87,20 @@
               
 
                 // 텍스트
-                messageA_translateY_in: [20, 0, { start: 0.15, end: 0.2 }],
-                messageB_translateY_in: [30, 0, { start: 0.6, end: 0.65 }],
-                messageC_translateY_in: [30, 0, { start: 0.87, end: 0.92 }],
-                messageA_opacity_in: [0, 1, { start: 0.25, end: 0.3 }],
-                messageB_opacity_in: [0, 1, { start: 0.6, end: 0.65 }],
-                messageC_opacity_in: [0, 1, { start: 0.87, end: 0.92 }],
-                messageA_translateY_out: [0, -20, { start: 0.4, end: 0.45 }],
-                messageB_translateY_out: [0, -20, { start: 0.68, end: 0.73 }],
-                messageC_translateY_out: [0, -20, { start: 0.95, end: 1 }],
-                messageA_opacity_out: [1, 0, { start: 0.4, end: 0.45 }],
-                messageB_opacity_out: [1, 0, { start: 0.68, end: 0.73 }],
-                messageC_opacity_out: [1, 0, { start: 0.95, end: 1 }],
-                pinB_scaleY: [0.5, 1, { start: 0.6, end: 0.65 }],
-                pinC_scaleY: [0.5, 1, { start: 0.87, end: 0.92 }],
+                messageA_translateY_in: [20, 0, { start: 0.05, end: 0.15 }],
+                messageB_translateY_in: [30, 0, { start:0.5, end: 0.65 }],
+                messageC_translateY_in: [30, 0, { start: 0.7, end: 0.8 }],
+                messageA_opacity_in: [0, 1, { start: 0.05, end: 0.15 }],
+                messageB_opacity_in: [0, 1, { start:0.5, end: 0.65 }],
+                messageC_opacity_in: [0, 1, { start: 0.7, end: 0.8 }],
+                messageA_translateY_out: [0, -20, { start: 0.2, end: 0.25 }],
+                messageB_translateY_out: [0, -20, { start:0.7, end:0.75 }],
+                messageC_translateY_out: [0, -20, { start: 0.85, end: 0.95 }],
+                messageA_opacity_out: [1, 0, { start: 0.2, end: 0.25 }],
+                messageB_opacity_out: [1, 0, { start:0.7, end:0.75 }],
+                messageC_opacity_out: [1, 0, { start: 0.85, end: 0.95 }],
+                pinB_scaleY: [0.5, 1, { start:0.5, end: 0.65 }],
+                pinC_scaleY: [0.5, 1, { start: 0.7, end: 0.8 }],
 
                 // 비디오
                 videoImageCount: 168,
@@ -116,26 +116,49 @@
             scrollHeight: 0,
             objs: {
                 container: document.querySelector('#scroll-section-3'),
+                canvasCaption: document.querySelector('.canvas-caption'),
+                canvas: document.querySelector('.image-blend-canvas'),
+                context: document.querySelector('.image-blend-canvas').getContext('2d'),
+                imagePath: [
+                    './img/blend/blend1.jpg',
+                    './img/blend/blend2.jpg',
+                    './img/blend/blend3.jpg',
+                ],
+                images: [],
             },
+            values: {
+                rect1X: [0,0, {start: 0, end: 0}],
+                rect2X: [0,0, {start: 0, end: 0}],
+                rectStartY: 0,
+            }
+
         },
     ]
     function setCanvasImages(){
+        // 0 인덱스의 캔버스 이미지
         let imgElem;
         for(let i = 0; i < sceneInfo[0].values.videoImageCount; i++) {
             imgElem = new Image();
             imgElem.src = `./img/canvas_0/main${i + 1}.jpg`;
             sceneInfo[0].objs.videoImages.push(imgElem);
         }
-
+        // 2 인덱스의 캔버스 이미지
         let imgElem2;
         for(let i = 0; i < sceneInfo[2].values.videoImageCount; i++) {
             imgElem2 = new Image();
             imgElem2.src = `./img/canvas_2/aven${i + 1}.jpg`;
             sceneInfo[2].objs.videoImages.push(imgElem2);
         }
+        // 3 인덱스의 캔버스 이미지
+        let imgElem3;
+        for(let i = 0; i < sceneInfo[3].objs.imagePath.length; i++) {
+            imgElem3 = new Image();
+            imgElem3.src = sceneInfo[3].objs.imagePath[i];
+            sceneInfo[3].objs.images.push(imgElem3);
+        }
+
     }
     setCanvasImages();
-    console.log(sceneInfo[2].objs.videoImages);
 
 
     function setLayout() {   
@@ -162,8 +185,8 @@
         document.body.setAttribute('id',`show-scene-${currentScene}`);
         // 캔버스 사이즈 조절
         const heightRatio = window.innerHeight / 1080;
-        sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%,-50%,0) scale(${heightRatio})`;
-        sceneInfo[2].objs.canvas.style.transform = `translate3d(-50%,-50%,0) scale(${heightRatio})`;
+        sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%,-50%,0) scaleY(${heightRatio})`;
+        sceneInfo[2].objs.canvas.style.transform = `translate3d(-50%,-50%,0) scaleY(${heightRatio})`;
 
     }
 
@@ -231,7 +254,8 @@
         const objs = sceneInfo[currentScene].objs;
         const values = sceneInfo[currentScene].values;
         const currentYOffset = yOffset - prevScrollHeight;
-        const scrollRatio = currentYOffset / sceneInfo[currentScene].scrollHeight;
+        const scrollHeight = sceneInfo[currentScene].scrollHeight;
+        const scrollRatio = currentYOffset / scrollHeight;
         switch (currentScene) {
             case 0:
                 // 캔버스 애니메이션
@@ -245,7 +269,7 @@
                 }
 
                 // 텍스트 애니메이션
-                if(scrollRatio <= 0.22) {
+                if(scrollRatio <= 0.18) {
                     objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset);
                     objs.messageA.style.transform = `translateY(${calcValues(values.messageA_translateY_in, currentYOffset)}%)`
                 } else {
@@ -308,7 +332,7 @@
                     objs.messageA.style.transform = `translate3d(0, ${calcValues(values.messageA_translateY_out, currentYOffset)}%, 0)`;
                 }
     
-                if (scrollRatio <= 0.67) {
+                if (scrollRatio <= 0.63) {
                     // in
                     objs.messageB.style.transform = `translate3d(0, ${calcValues(values.messageB_translateY_in, currentYOffset)}%, 0)`;
                     objs.messageB.style.opacity = calcValues(values.messageB_opacity_in, currentYOffset);
@@ -331,9 +355,147 @@
                     objs.messageC.style.opacity = calcValues(values.messageC_opacity_out, currentYOffset);
                     objs.pinC.style.transform = `scaleY(${calcValues(values.pinC_scaleY, currentYOffset)})`;
                 }
+
+
+                // section3 미리 캔버스를 그릴 준비
+
+                if(scrollRatio > 0.9) {
+                    const objs = sceneInfo[3].objs;
+                    const values = sceneInfo[3].values;
+                    const widthRatio = window.innerWidth / objs.canvas.width;
+                    const heightRatio = window.innerHeight / objs.canvas.height;
+
+                    let canvasScaleRatio;
+
+                    if(widthRatio <= heightRatio) {
+                        // 캔버스보다 브라우저 창이 홀쭉한 경우
+                        canvasScaleRatio = heightRatio; 
+                    } else {
+                        // 캔버스보다 브라우저 창이 납작한경우
+                        canvasScaleRatio = widthRatio;
+                        
+                        
+                    }
+
+                    objs.canvas.style.transform = `scale(${canvasScaleRatio})`;
+                    objs.context.fillStyle = `#fff`;
+                    objs.context.drawImage(objs.images[1],0,0,objs.canvas.width,objs.canvas.height);
+                    
+                    // 화면안에 꽉차는 캔버스 높이 & 너비 구하기
+                    const recalculatedInnerWidth = document.body.offsetWidth / canvasScaleRatio;
+                    const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio;
+
+                    // 흰색 박스 너비, 위치
+                    const whiteRectWidth = recalculatedInnerWidth * 0.3;
+                    values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2;
+                    values.rect1X[1] = values.rect1X[0] -whiteRectWidth;
+
+                    values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth;
+                    values.rect2X[1] = values.rect2X[0] + whiteRectWidth;
+
+                    // 박스 그리기
+                    // objs.context.fillRect(values.rect1X[0],0, parseInt(whiteRectWidth), obj.canvas.height);
+                    // objs.context.fillRect(values.rect2X[0],0, parseInt(whiteRectWidth), obj.canvas.height);
+
+                    objs.context.fillRect(
+                        parseInt(values.rect1X[0]),
+                        0,
+                        parseInt(whiteRectWidth),
+                        objs.canvas.height);
+
+                    objs.context.fillRect(
+                        parseInt(values.rect2X[0]),
+                        0,
+                        parseInt(whiteRectWidth),
+                        objs.canvas.height)
+
+
+                }
+
+
+
                 break;
             case 3:
+                // 단계설정
+                let step = 0;
+
+                // 가로/세로 모두 꽉 차게 하기위해 여기서 세팅(계산 필요)
+                const widthRatio = window.innerWidth / objs.canvas.width;
+                const heightRatio = window.innerHeight / objs.canvas.height;
+
+                let canvasScaleRatio;
+
+                if(widthRatio <= heightRatio) {
+                    // 캔버스보다 브라우저 창이 홀쭉한 경우
+                    canvasScaleRatio = heightRatio; 
+                } else {
+                    // 캔버스보다 브라우저 창이 납작한경우
+                    canvasScaleRatio = widthRatio;
+                    
+                    
+                }
+
+                objs.canvas.style.transform = `scale(${canvasScaleRatio})`;
+                objs.context.fillStyle = `#fff`;
+                objs.context.drawImage(objs.images[1],0,0,objs.canvas.width,objs.canvas.height);
                 
+                // 화면안에 꽉차는 캔버스 높이 & 너비 구하기
+                const recalculatedInnerWidth = document.body.offsetWidth / canvasScaleRatio;
+                const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio;
+
+                // 구간 구하기
+                if(!values.rectStartY) {
+                    // values.rectStartY = objs.canvas.getBoundingClientRect().top;
+                    // values.rectStartY = objs.canvas.offsetTop; //scale 때문에 제대로 읽어올수 없음.
+
+                    values.rectStartY = objs.canvas.offsetTop + (objs.canvas.height - objs.canvas.height * canvasScaleRatio)/2;
+
+                    values.rect1X[2].start = (window.innerHeight / 2) / scrollHeight;
+                    values.rect2X[2].start = (window.innerHeight / 2) / scrollHeight;
+
+                    values.rect1X[2].end = values.rectStartY / scrollHeight;
+                    values.rect2X[2].end = values.rectStartY / scrollHeight;
+                }
+
+                // 흰색 박스 너비, 위치
+
+                const whiteRectWidth = recalculatedInnerWidth * 0.3;
+                values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2;
+                values.rect1X[1] = values.rect1X[0] -whiteRectWidth;
+
+                values.rect2X[0] = values.rect1X[0] + recalculatedInnerWidth - whiteRectWidth;
+                values.rect2X[1] = values.rect2X[0] + whiteRectWidth;
+
+                // 박스 그리기
+                // objs.context.fillRect(values.rect1X[0],0, parseInt(whiteRectWidth), obj.canvas.height);
+                // objs.context.fillRect(values.rect2X[0],0, parseInt(whiteRectWidth), obj.canvas.height);
+
+                objs.context.fillRect(
+                    parseInt(calcValues(values.rect1X, currentYOffset)),
+                    0,
+                    parseInt(whiteRectWidth),
+                    objs.canvas.height);
+
+                objs.context.fillRect(
+                    parseInt(calcValues(values.rect2X, currentYOffset)),
+                    0,
+                    parseInt(whiteRectWidth),
+                    objs.canvas.height)
+
+
+                if(scrollRatio < values.rect1X[2].end) {
+                    step = 1;
+                    console.log('캔버스닿기전');
+                } else {
+                    step = 2;
+                    console.log('캔버스 닿은후');
+                    objs.canvas.classList.add('sticky-elem')
+                    // if() {
+                    //     step = 3;
+                    // }
+                }
+
+
                 break;
         
         }

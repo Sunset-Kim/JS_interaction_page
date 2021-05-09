@@ -87,6 +87,7 @@ p {
 }
 /* common section */
 .scroll-section {
+    position: relative;
     padding-top: 50vh;
 }
 
@@ -157,6 +158,11 @@ p {
 }
 
 /* section3 */
+#scroll-section-3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .mid-message {
     padding: 0 1rem;
     font-size: 2.2rem;
@@ -188,6 +194,12 @@ p {
     position: fixed;
     left: 0;
     width: 100%;
+}
+.image-blend-canvas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: skyblue;    
 }
 .sticky-elem-canvas {
     height: 100%;
@@ -255,7 +267,7 @@ p {
         margin: 0 auto;
     }
     .mid-message {
-        font-size: 4vw;
+        font-size: 3.5vw;
     }
     .canvas-caption {
         font-size: 2rem;
