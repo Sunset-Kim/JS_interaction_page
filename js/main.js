@@ -7,6 +7,11 @@
     let prevScrollHeight = 0; // 현재 스크롤 위치 이전의 섹션의 높이값의 합
     let currentScene = 0; // 현재 활성화된 씬의 인덱스
     let enterNewScene = false; //새로운 씬에 들어갈때 true --> 음수방지
+    // 감속 변수
+    let acc = 0.1;
+    let delayedYOffset = 0;
+    let rafId = 0;
+    let rafState;
 
     const sceneInfo = [
         {
@@ -211,12 +216,12 @@
         }
         // console.log(prevScrollHeight);
 
-        if(yOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
+        if(delayedYOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
             enterNewScene = true;
             currentScene ++;
             document.body.setAttribute('id',`show-scene-${currentScene}`);
 
-        } else if (yOffset < prevScrollHeight) {
+        } else if (delayedYOffset < prevScrollHeight) {
             if(currentScene === 0) return;
             enterNewScene = true;
             currentScene --;
@@ -270,10 +275,12 @@
         const scrollRatio = currentYOffset / scrollHeight;
         switch (currentScene) {
             case 0:
-                // 캔버스 애니메이션
-                let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
-                sequence = (isNaN(sequence)) ? 0 : sequence;
-                objs.context.drawImage(objs.videoImages[sequence],0,0);
+                // 캔버스 애니메이션 => 리퀘스트 처리
+                // let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
+                // if(objs.videoImages[sequence]) {
+                //     objs.context.drawImage(objs.videoImages[sequence],0,0);
+                // };
+                
                 if(scrollRatio <= 0.5) {
                     objs.canvas.style.opacity = calcValues(values.canvas_opacitiy_in,currentYOffset);
                 } else {
@@ -324,10 +331,12 @@
                 
                 break;
             case 2:
-                // 캔버스 애니메이션
-                let sequence2 = Math.round(calcValues(values.imageSequence, currentYOffset));
-                sequence2 = (isNaN(sequence2)) ? 0 : sequence2;
-                objs.context.drawImage(objs.videoImages[sequence2],0,0,objs.canvas.width,objs.canvas.height);
+                // 캔버스 애니메이션 =>
+                // let sequence2 = Math.round(calcValues(values.imageSequence, currentYOffset));
+                // if(objs.videoImages[sequence2]) {
+                //     objs.context.drawImage(objs.videoImages[sequence2],0,0,objs.canvas.width,objs.canvas.height);
+                // }
+
                 if(scrollRatio <= 0.5) {
                     objs.canvas.style.opacity = calcValues(values.canvas_opacitiy_in,currentYOffset);
                 } else {
@@ -560,6 +569,31 @@
         
         }
     }
+    // 리퀘스트 애니메이션
+    function loop() {
+        delayedYOffset = delayedYOffset + (yOffset - delayedYOffset) * acc;
+        
+        if(!enterNewScene) {
+            if(currentScene === 0 || currentScene === 2) {
+                const objs = sceneInfo[currentScene].objs;
+                const values = sceneInfo[currentScene].values;
+                const currentYOffset = delayedYOffset - prevScrollHeight;
+                let sequence = Math.round(calcValues(values.imageSequence, currentYOffset));
+                if(objs.videoImages[sequence]) {
+                    objs.context.drawImage(objs.videoImages[sequence],0,0,objs.canvas.width,objs.canvas.height);
+                }
+            }
+        }
+        
+
+
+        rafId = requestAnimationFrame(loop);
+
+        if(Math.abs(yOffset - delayedYOffset) < 1) {
+            cancelAnimationFrame(rafId);
+            rafState = false;
+        }
+    }
 
     // 이벤트
     // load와 돔컨텐트 로드 차이 => html 구조만 다 받으면,
@@ -572,6 +606,12 @@
         yOffset = pageYOffset;
         scrollLoop();
         checkMenu();
+
+        if(!rafState) {
+            rafId = requestAnimationFrame(loop);
+            rafState = true;
+        }
+
     })
 
     // tdd 코드
