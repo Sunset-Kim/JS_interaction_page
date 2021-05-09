@@ -33,6 +33,9 @@ p {
 body.before-load {
     overflow: hidden;
 }
+.container {
+    overflow-x: hidden;
+}
 /* loading */
 .loading {
     position: fixed;
@@ -124,6 +127,9 @@ body.before-load {
     top: 0;
     background-color: rgba(255,255,255,0.1);
     backdrop-filter: saturate(180%) blur(15px);
+    -webkit-backdrop-filter: saturate(180%) blur(15px);
+    -moz-backdrop-filter: saturate(180%) blur(15px);
+    -o-backdrop-filter: saturate(180%) blur(15px);
 }
 .local-nav-item:not(.logo) a {
     margin-left: 2rem;
@@ -167,6 +173,7 @@ body.before-load {
 }
 /* section1 */
 .desc {
+    padding: 0 4rem;
     font-size: 1.4rem;
     color: #666;
 }
@@ -185,27 +192,29 @@ body.before-load {
     margin-bottom: 0.5em;
 }
 #scroll-section-2 .main-message {
+    color: white;
     font-size: 3rem;
     font-weight: 700;
 }
 .desc-message {
+    color: white;
     font-weight: 500;
     font-size: 1.6rem;
     width: 50%;
     opacity: 0;
 }
 .desc-message.b {
-    top: 20%;
-    left: 30%;
+    top: 15%;
+    left: 15%;
 }
 .desc-message.c {
-    top: 70%;
-    left: 60%;
+    top: 65%;
+    left: 30%;
 }
 .pin {
     width: 1px;
     height: 50px;
-    background: #000;
+    background: #fff;
 }
 
 /* section3 */
@@ -226,9 +235,10 @@ body.before-load {
 }
 
 .canvas-caption {
-    padding: 0 1rem;
+    padding: 0 4rem;
     color: #666;
-    font-size: 1.4rem;
+    font-size: 1.8rem;
+    margin-top: -15rem;
 }
 
 /* footer */
@@ -280,6 +290,7 @@ body.before-load {
 #show-scene-2 #scroll-section-2 .sticky-elem,
 #show-scene-3 #scroll-section-3 .sticky-elem {
     display: block;
+    will-change: transform, opacity;
 }
 
 /* 반응형 디자인 */
@@ -291,8 +302,16 @@ body.before-load {
     .local-nav-item:not(.logo) a {
         margin-left: 1rem;
     }
+    .desc {
+         padding: 0 1rem
+     }
     .canvas-caption {
-        margin: -8em auto 0;
+        padding: 0 1rem;
+        font-size: 1.4rem;
+        margin: -24rem auto 0;
+    }
+    .desc-message {
+        width: 40%;
     }
 }
 
@@ -314,6 +333,7 @@ body.before-load {
     }
     #scroll-section-2 .main-message {
         font-size: 6vw;
+        
     }
     .desc-message {
         width: 15%;
