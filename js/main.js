@@ -164,6 +164,14 @@
     }
     setCanvasImages();
 
+    function checkMenu() {
+        if(yOffset > 45) {
+            document.body.classList.add('local-nav-sticky');
+        } else {
+            document.body.classList.remove('local-nav-sticky');
+        }
+    }
+
 
     function setLayout() {   
         // 스크롤 높이값 세팅 함수
@@ -563,6 +571,7 @@
     window.addEventListener('scroll', () => {
         yOffset = pageYOffset;
         scrollLoop();
+        checkMenu();
     })
 
     // tdd 코드
